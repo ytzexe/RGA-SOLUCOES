@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20;
+    padding: 10;
+    background-color: #f4f4f4;
+    background-image: linear-gradient(45deg, cyan, yellow);
+}
+
+.TelaLogin {
+  background-color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 300px;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    line-height: 1.5;
+
+}
+
+input{
+    width: 100%;
+    padding: 10px;
+    margin: 0px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+}
+button {
+    width: 107%;
+    padding: 10px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
