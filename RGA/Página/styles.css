@@ -7,36 +7,35 @@ body {
 }
 
 .TelaLogin {
-  background-color: rgba(0, 0, 0, 0.8);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-    padding: 50px;
-    border-radius: 20px;
+background-color: rgba(0, 0, 0, 0.8);
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+    padding: 7%;
+    border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 300px;
     color: white;
     text-align: center;
     font-size: 20px;
     line-height: 1.5;
-
 }
 
 input{
-    width: 100%;
+    width: 95%;
     padding: 10px;
-    margin: 0px 0;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
+    margin: 10 px;
+    border: NONE;
+    border-radius: 10px;
+    font-size: 20px;
+
 }
 button {
-    width: 107%;
+    width: 100%;
     padding: 10px;
     margin-top: 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: #28a745;
     color: white;
     font-size: 18px;
@@ -46,4 +45,3 @@ button {
 button:hover {
     background-color: #218838;
 }
-
