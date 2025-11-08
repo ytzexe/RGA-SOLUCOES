@@ -1,0 +1,162 @@
+/* --- style.css: Estilo para o Dashboard de Gestão Profissional (SPA) --- */
+
+:root {
+    --cor-principal: #3498db; /* Azul Corporativo */
+    --cor-secundaria: #2c3e50; /* Cinza Escuro */
+    --cor-alerta: #e74c3c; /* Vermelho */
+    --cor-sucesso: #2ecc71; /* Verde */
+    --fundo-pagina: #f4f7f9;
+    --fundo-sidebar: #2c3e50;
+}
+
+body {
+    background-color: var(--fundo-pagina);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-left: 250px; /* Espaço para o Sidebar Fixo */
+    padding-top: 20px;
+}
+
+/* ------------------------------------- */
+/* SIDEBAR (MENU LATERAL) - Fixo */
+/* ------------------------------------- */
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--fundo-sidebar);
+    color: white;
+    padding-top: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.sidebar .logo {
+    text-align: center;
+    padding: 10px 0 30px 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+}
+
+.sidebar .nav-link {
+    color: #bdc3c7;
+    padding: 15px 20px;
+    margin: 5px 0;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 1rem;
+    display: block;
+    text-decoration: none;
+}
+
+.sidebar .nav-link i {
+    width: 25px;
+}
+
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+    background-color: var(--cor-principal);
+    color: white;
+    border-left: 4px solid #f1c40f; 
+}
+
+/* ------------------------------------- */
+/* ESTILOS DE DADOS E TABELAS - MELHORIAS APLICADAS AQUI */
+/* ------------------------------------- */
+
+.card-dashboard {
+    /* Manter a borda lateral para identificação rápida de cor, mas suavizar */
+    border-left: 5px solid var(--cor-principal);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+    position: relative; /* Necessário para o ícone e a barra de progresso */
+    overflow: hidden; /* Para garantir que o progresso não transborde */
+}
+
+/* Efeito de Hover: Sobe e a sombra aumenta */
+.card-dashboard:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-title-lg {
+    font-size: 2.2rem; /* Aumentar um pouco a fonte do valor */
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+/* Novo estilo para o ícone interno do card */
+.card-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 3rem;
+    color: rgba(0, 0, 0, 0.05); /* Ícone bem sutil no fundo */
+    opacity: 0.8; /* Ajuste a opacidade para um toque sutil */
+    transition: color 0.3s;
+}
+
+/* Novo estilo para a barra de "Progresso" no rodapé do card */
+.card-progress-bar {
+    height: 6px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.card-progress-fill {
+    height: 100%;
+    transition: width 0.5s ease-out;
+}
+
+
+.table thead th {
+    background-color: var(--cor-principal);
+    color: white;
+    border: none;
+}
+
+/* Estilo para Itens Faltando */
+.table-critico thead th {
+    background-color: var(--cor-alerta);
+}
+
+.linha-critica {
+    background-color: rgba(231, 76, 60, 0.1);
+    font-weight: bold;
+    border-left: 3px solid var(--cor-alerta);
+}
+
+/* Classes adicionais usadas no JS/HTML */
+.text-cor-principal {
+    color: var(--cor-principal) !important;
+}
+.bg-success {
+    background-color: var(--cor-sucesso) !important;
+}
+.text-success {
+    color: var(--cor-sucesso) !important;
+}
+.text-danger {
+    color: var(--cor-alerta) !important;
+}
+.bg-danger {
+    background-color: var(--cor-alerta) !important;
+}
+.bg-info {
+     background-color: #3498db !important;
+}
+.text-info {
+     color: #3498db !important;
+}
+
+/* Ajuste de seções para navegação de âncora (SPA) */
+section {
+    /* Padding para garantir que o título da seção não fique escondido sob a barra superior (se houver) */
+    padding-top: 40px !important;
+    margin-top: -40px !important; 
+}
