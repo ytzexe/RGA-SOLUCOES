@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Bem-vindo!</h1>
+        <p>Agora você faz parte da MAP.</p>
+
+        <button id="logoutButton" class="btn-logout">Sair</button>
+
+    </div>
+
+    <script>
+
+        const isAuth = sessionStorage.getItem('systemex_authed');
+
+        if (isAuth !== '1') {
+            window.location.href = 'Login.html';
+        }
+
+
+        const logoutButton = document.getElementById('logoutButton');
+
+        logoutButton.addEventListener('click', function () {
+
+            alert('Saindo... Volte sempre!');
+
+
+            sessionStorage.removeItem('systemex_authed');
+
+
+            window.location.href = 'Login.html';
+        });
+    </script>
+</body>
+
+</html>
