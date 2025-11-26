@@ -1,0 +1,194 @@
+/* === Paleta base (dark por padrão) === */
+:root{
+  --cor-principal: #42628C;   /* azul destaque */
+  --cor-secundaria: #253C59;  /* azul médio */
+  --cor-escura: #1A2A40;      /* azul escuro */
+  --texto-escuro: #0D0D0D;
+  --texto-claro: #F2F2F2;
+  --fundo-pagina: #F2F2F2;    /* usado no tema claro */
+  --fundo-sidebar: #1A2A40;
+
+  --cor-alerta: #e74c3c;      /* vermelho */
+  --cor-sucesso: #2ecc71;     /* verde */
+  --cor-aviso: #f39c12;       /* amarelo */
+
+  --surface-dark: #223042;    /* superfícies no dark */
+  --surface-light: #ffffff;   /* superfícies no light */
+}
+
+/* Tema claro */
+html[data-theme="light"]{
+  --bg-body: var(--fundo-pagina);
+  --bg-surface: var(--surface-light);
+  --text: var(--texto-escuro);
+  --muted: #6b7280;
+  --shadow: rgba(0,0,0,.12);
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #0D0D0D;
+  --sidebar-border: #e5e7eb;
+}
+
+/* Tema escuro */
+html[data-theme="dark"]{
+  --bg-body: #0f1622;
+  --bg-surface: var(--surface-dark);
+  --text: var(--texto-claro);
+  --muted: #9aa4b2;
+  --shadow: rgba(0,0,0,.35);
+  --sidebar-bg: var(--fundo-sidebar);
+  --sidebar-text: var(--texto-claro);
+  --sidebar-border: rgba(255,255,255,.08);
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  background-color: var(--bg-body);
+  color: var(--text);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding-top: 56px; /* topbar fixa */
+}
+
+/* Sidebar fixa no desktop; offcanvas já cuida no mobile */
+.sidebar{
+  width: 0px;
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  border-right: 1px solid var(--sidebar-border);
+}
+.sidebar .logo-area .brand-text{ font-size: 1.1rem; }
+
+.sidebar .nav-link{
+  color: var(--sidebar-text);
+  padding: 14px 18px;
+  margin: 0;
+  display: block;
+  text-decoration: none;
+  border-left: 4px solid transparent;
+  transition: background-color .2s, border-color .2s, color .2s;
+}
+.sidebar .nav-link i{ width: 22px; margin-right: 8px; }
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active{
+  background: var(--cor-secundaria);
+  color: var(--texto-claro);
+  border-left-color: var(--cor-principal);
+}
+
+/* Topbar */
+.topbar{
+  background: var(--bg-surface);
+}
+.brand-logo{
+  height: 100px; width: auto;
+  object-fit: contain;
+}
+.brand-text{
+  color: var(--text);
+}
+
+
+
+/* Main spacing: no desktop, espaço ao lado do sidebar */
+@media (min-width: 992px){
+  .main{
+    margin-left: 0px;
+  }
+}
+
+/* Cards */
+.bg-surface{ background: var(--bg-surface) !important; }
+.card-dashboard{
+  border-left:5px solid var(--cor-principal);
+  transition: transform .2s ease, box-shadow .2s ease;
+  position:relative; overflow:hidden;
+  box-shadow: 0 6px 14px var(--shadow);
+}
+.card-dashboard:hover{ transform: translateY(-3px); box-shadow: 0 12px 25px var(--shadow) !important; }
+.card-title-lg{ font-size: 2rem; font-weight: 700; margin-bottom: 6px; }
+.card-icon{ position:absolute; top:16px; right:16px; font-size:2.8rem; color: rgba(0,0,0,.06); }
+.card-progress-bar{ height:6px; width:100%; position:absolute; left:0; bottom:0; background-color: rgba(0,0,0,.06); }
+.card-progress-fill{ height:100%; transition: width .5s ease-out; }
+
+/* Tabelas */
+.table thead th{
+  background: var(--cor-principal);
+  color: var(--texto-claro);
+  border: none;
+}
+.table-critico thead th{ background: var(--cor-alerta); }
+.linha-critica{
+  background-color: rgba(231,76,60,.10);
+  font-weight: 600;
+  border-left:3px solid var(--cor-alerta);
+}
+.table td, .table th{
+  vertical-align: middle;
+}
+
+/* Utilitários */
+.text-cor-principal{ color: var(--cor-principal) !important; }
+.bg-success{ background-color: var(--cor-sucesso) !important; }
+.text-success{ color: var(--cor-sucesso) !important; }
+.text-danger{ color: var(--cor-alerta) !important; }
+.bg-danger{ background-color: var(--cor-alerta) !important; }
+.bg-info{ background-color: var(--cor-principal) !important; }
+.text-info{ color: var(--cor-principal) !important; }
+
+.btn-primary{
+  --bs-btn-bg: var(--cor-principal); --bs-btn-border-color: var(--cor-principal);
+  --bs-btn-hover-bg: #36567A; --bs-btn-hover-border-color: #36567A;
+}
+
+.sair-primary{
+  
+  --bs-btn-hover-bg: #ff0000; --bs-btn-hover-border-color: #ff0000;
+  --bs-btn-bg: var(--cor-principal); 
+  --bs-btn-border-color: var(--cor-principal);
+  color: rgb(255, 255, 255);
+}
+
+
+.btn-warning{ --bs-btn-bg: var(--cor-aviso); --bs-btn-border-color: var(--cor-aviso); color:#0D0D0D; }
+hr{ border-color: var(--sidebar-border); }
+
+/* Ancoragem */
+section{ scroll-margin-top: 80px; }
+
+/* Pills de cor (config) */
+.color-pill{ min-width: 80px; }
+
+/* Melhorias mobile */
+@media (max-width: 575.98px){
+  .card-title-lg{ font-size: 1.6rem; }
+  .brand-text{ display:none; }
+}
+
+/* Menu do topo, todo à esquerda */
+.topbar .navbar-nav.top-menu .nav-link{
+  color: var(--text);
+  padding: .6rem .8rem;
+  border-radius: .5rem;
+  display: flex; align-items: center;
+}
+.topbar .navbar-nav.top-menu .nav-link i{ opacity:.9; }
+
+.topbar .navbar-nav.top-menu .nav-link:hover,
+.topbar .navbar-nav.top-menu .nav-link:focus{
+  background: var(--cor-secundaria);
+  color: var(--texto-claro);
+}
+.topbar .navbar-nav.top-menu .nav-link.active{
+  background: var(--cor-secundaria);
+  color: var(--texto-claro);
+  box-shadow: inset 3px 0 0 0 var(--cor-principal);
+}
+
+/* No tema claro, mantém contraste bonito */
+html[data-theme="light"] .topbar .navbar-nav.top-menu .nav-link:hover,
+html[data-theme="light"] .topbar .navbar-nav.top-menu .nav-link.active{
+  background: #e9eef6;
+  color: var(--texto-escuro);
+  box-shadow: inset 3px 0 0 0 var(--cor-principal);
+}

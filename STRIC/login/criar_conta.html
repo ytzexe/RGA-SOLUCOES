@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Criar Nova Conta</h2>
+        <form action="#" method="POST">
+            <div class="input-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="Nome">Nome:</label>
+                <input type="text" id="Nome" name="Nome" required>
+            </div>
+            <div class="input-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required>
+            </div>
+            <button type="button" onclick="registrarUsuario()">Cadastrar</button>
+
+        </form>
+        <div class="links">
+            <a href="login.html">Já tenho uma conta</a>
+        </div>
+    </div>
+    <script>
+// Registrar conta sem interferir no resto do sistema
+function registrarUsuario() {
+    const email = document.getElementById("email").value.trim();
+    const nome = document.getElementById("Nome").value.trim();
+    const senha = document.getElementById("senha").value.trim();
+
+    if (!email || !nome || !senha) {
+        alert("Preencha todos os campos!");
+        return;
+    }
+
+    let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+    if (usuarios.some(u => u.email === email)) {
+        alert("Este e-mail já está cadastrado!");
+        return;
+    }
+
+    usuarios.push({ email, nome, senha });
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+    alert("Conta criada com sucesso!");
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

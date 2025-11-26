@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="dark"> <!-- dark padrão; o app.js ajusta pela preferência salva -->
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>S.T.R.I.C — Gestão de Estoque</title>
+    <meta name="theme-color" content="#1A2A40" />
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="styleIndex.css">
+</head>
+
+<body>
+
+    <!-- Topbar (mobile + desktop) -->
+    <nav class="navbar navbar-expand-lg topbar fixed-top shadow-sm">
+        <div class="container-fluid">
+            <button class="btn btn-outline-primary me-2 d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="d-flex align-items-center gap-2">
+                <img id="appLogo" src="../entrada/assets/Preta Com Fundo Branco.jpg" alt="Logo STRIC" class="brand-logo">
+                <span class="navbar-brand mb-0 h1 brand-text">
+            </div>
+
+            <!--  colapsável no mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topbarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="topbarMenu">
+                <!--  me-auto = tudo à esquerda -->
+                <ul class="navbar-nav me-auto align-items-center gap-2 top-menu">
+                    <li class="nav-item"><a class="nav-link active" href="index.html"><i
+                                class="fas fa-gauge-high me-1"></i> Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="estoque_completo.html"><i
+                                class="fas fa-warehouse me-1"></i>
+                            Estoque Completo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reposicao_urgente.html"><i
+                                class="fas fa-triangle-exclamation me-1"></i> Itens Críticos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="manual_vendas.html"><i class="fas fa-handshake me-1"></i> Manual
+                            de Vendas</a></li>
+                </ul>
+
+                <!-- Ações (ficam à direita) -->
+                <div class="d-flex align-items-center gap-2">
+                    <button id="btnThemeToggle" class="btn btn-outline-secondary" title="Alternar tema"><i
+                            class="fas fa-moon"></i></button>
+                    <button class="btn btn-outline-secondary" data-bs-toggle="modal"
+                        data-bs-target="#modalConfiguracoes">
+
+                        <i class="fas fa-gear"></i> <span class="d-none d-sm-inline">Configurações</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Sidebar (fixa no desktop, offcanvas no mobile) -->
+    <div class="offcanvas-lg offcanvas-start sidebar" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+        <div class="offcanvas-header d-lg-none">
+            <h5 class="offcanvas-title" id="sidebarLabel">Menu</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                aria-label="Fechar"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <div class="logo-area d-none d-lg-flex align-items-center gap-2 px-3 py-3">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo -->
+    <main class="main container-fluid">
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="py-4">
+            <h1 class="mb-3 text-cor-principal"><i class="fas fa-tachometer-alt me-2"></i> Controle de Estoque</h1>
+            <hr>
+
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card card-dashboard p-3 shadow-sm bg-surface"
+                        style="border-left-color: var(--cor-sucesso) !important;">
+                        <i class="fas fa-dollar-sign card-icon" style="color: var(--cor-sucesso);"></i>
+                        <p class="text-muted mb-1">Valor Total em Estoque</p>
+                        <p id="totalValorEstoque" class="card-title-lg text-success">R$ 0,00</p>
+                        <p class="text-sm text-muted">Baseado no preço de venda.</p>
+                        <div class="card-progress-bar">
+                            <div class="card-progress-fill bg-success" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card card-dashboard p-3 shadow-sm bg-surface"
+                        style="border-left-color: var(--cor-alerta) !important;">
+                        <i class="fas fa-exclamation-triangle card-icon" style="color: var(--cor-alerta);"></i>
+                        <p class="text-muted mb-1">Itens em Nível Crítico</p>
+                        <p id="totalItensCriticos" class="card-title-lg text-danger">0</p>
+                        <p class="text-sm text-muted">Requer reposição imediata.</p>
+                        <div class="card-progress-bar">
+                            <div class="card-progress-fill bg-danger" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card card-dashboard p-3 shadow-sm bg-surface"
+                        style="border-left-color: var(--cor-principal) !important;">
+                        <i class="fas fa-chart-bar card-icon" style="color: var(--cor-principal);"></i>
+                        <p class="text-muted mb-1">Vendas (Mês)</p>
+                        <p id="indicadorVendasMes" class="card-title-lg text-info">R$ 12.350,00</p>
+                        <p class="text-sm text-muted"><span id="indicadorVendasDelta">+12%</span> vs. mês anterior.</p>
+                        <div class="card-progress-bar">
+                            <div class="card-progress-fill bg-info" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card card-dashboard p-3 shadow-sm bg-surface"
+                        style="border-left-color: var(--cor-aviso) !important;">
+                        <i class="fas fa-paper-plane card-icon" style="color: var(--cor-aviso);"></i>
+                        <p class="text-muted mb-1">Orçamentos Pendentes</p>
+                        <p id="indicadorOrcamentos" class="card-title-lg text-warning">5</p>
+                        <p class="text-sm text-muted">Aguardando aprovação.</p>
+                        <div class="card-progress-bar">
+                            <div class="card-progress-fill bg-warning" style="width: 50%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm bg-surface p-3">
+                <div class="d-flex flex-wrap align-items-center gap-2 justify-content-between">
+                    <h3 class="mb-3 mb-sm-0"><i class="fas fa-exclamation-circle text-danger me-2"></i> Baixo Estoque
+                        (Top 5)</h3>
+                    <a href="#faltando" class="btn btn-danger btn-sm"><i class="fas fa-arrow-right me-1"></i> Ver
+                        Todos</a>
+                </div>
+                <div class="table-responsive mt-3">
+                    <table class="table table-hover table-critico table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>CÓDIGO</th>
+                                <th>ITEM</th>
+                                <th>QTD. ATUAL</th>
+                                <th>MÍNIMO</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaCriticosDashboard"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-4">
+
+    
+
+
+
+        <hr class="my-4">
+
+ 
+
+        <hr class="my-4">
+
+        <!-- RELATÓRIOS -->
+        <section id="relatorios" class="py-4">
+            <h2 class="fw-bold mb-4 text-cor-principal"><i class="fas fa-chart-line me-2"></i> Relatórios e Análise</h2>
+
+            <div class="row g-4">
+                <div class="col-12 col-lg-6">
+                    <div class="card p-4 shadow-sm h-100 bg-surface">
+                        <h4 class="card-title"><i class="fas fa-funnel-dollar me-2"
+                                style="color: var(--cor-principal);"></i> Margem de Lucro Média (Mês)</h4>
+                        <p id="margemMedia" class="fs-1 fw-bold text-center mt-3 text-cor-principal">—</p>
+                        <p class="text-muted text-center">Meta: 50%</p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="card p-4 shadow-sm h-100 bg-surface">
+                        <h4 class="card-title"><i class="fas fa-truck-loading me-2"
+                                style="color: var(--cor-principal);"></i> Frequência de Reposição</h4>
+                        <p class="fs-6 text-muted">Exemplo: indicadores fictícios para demonstrar layout.</p>
+                        <div id="listaReposicao">
+                            <p class="fs-5">Correia Dentada: <span class="fw-bold">2 Pedidos/Mês</span></p>
+                            <p class="fs-5">Óleo 5W30: <span class="fw-bold">4 Pedidos/Mês</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL: Novo Item -->
+    <div class="modal fade" id="modalNovoItem" tabindex="-1" aria-labelledby="modalNovoItemLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-surface">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="modalNovoItemLabel"><i class="fas fa-plus me-1"></i> Adicionar Novo Item
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNovoItem">
+                        <div class="mb-3"><label for="itemNome" class="form-label">Nome do Item</label><input
+                                type="text" class="form-control" id="itemNome" required></div>
+                        <div class="mb-3"><label for="itemCodigo" class="form-label">Código</label><input type="text"
+                                class="form-control" id="itemCodigo" required></div>
+                        <div class="mb-3"><label for="itemCategoria" class="form-label">Categoria</label>
+                            <select class="form-select" id="itemCategoria" required>
+                                <option value="oleos">Óleos e Fluidos</option>
+                                <option value="freios">Freios e Suspensão</option>
+                                <option value="eletrica">Elétrica e Baterias</option>
+                                <option value="motor">Motor</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3"><label for="itemQtd" class="form-label">Quantidade</label><input
+                                    type="number" class="form-control" id="itemQtd" min="0" required></div>
+                            <div class="col-md-6 mb-3"><label for="itemMinimo" class="form-label">Estoque
+                                    Mínimo</label><input type="number" class="form-control" id="itemMinimo" min="0"
+                                    required></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3"><label for="itemCusto" class="form-label">Preço Custo
+                                    (R$)</label><input type="number" class="form-control" id="itemCusto" step="0.01"
+                                    required></div>
+                            <div class="col-md-6 mb-3"><label for="itemVenda" class="form-label">Preço Venda
+                                    (R$)</label><input type="number" class="form-control" id="itemVenda" step="0.01"
+                                    required></div>
+                        </div>
+                        <div class="mb-3"><label for="itemFornecedor" class="form-label">Fornecedor</label><input
+                                type="text" class="form-control" id="itemFornecedor"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button class="btn btn-success" id="btnSalvarItem">Salvar Item</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Detalhes -->
+    <div class="modal fade" id="modalVerDetalhes" tabindex="-1" aria-labelledby="modalVerDetalhesLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-surface">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="modalVerDetalhesLabel"><i class="fas fa-search me-1"></i> Detalhes do
+                        Item</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body" id="corpoDetalhesItem"></div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button class="btn btn-danger" id="btnExcluirItem">Excluir Item</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Configurações -->
+    <div class="modal fade" id="modalConfiguracoes" tabindex="-1" aria-labelledby="modalConfiguracoesLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-surface">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalConfiguracoesLabel"><i class="fas fa-gear me-2"></i> Configurações
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="switchTema">
+                        <label class="form-check-label" for="switchTema">Tema escuro</label>
+
+                    </div>
+
+
+                    <button class="btn btn-primary" onclick="window.location.href='../login/login.html'">
+                        Logout
+                    </button>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Libs -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- App JS -->
+    <script src="app.js"></script>
+</body>
+
+</html>
+
+<script>
+    // Adiciona usuário fixo sem alterar funções existentes
+    let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+    usuarios.push({
+        email: "teste@teste.com",
+        senha: "123"
+    });
+
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+</script>
