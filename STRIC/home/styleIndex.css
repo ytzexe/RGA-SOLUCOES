@@ -1,43 +1,50 @@
-/* === Paleta base (dark por padrão) === */
+/* === Paleta base (STRIC) === */
+
+
+
 :root{
-  --cor-principal: #42628C;   /* azul destaque */
-  --cor-secundaria: #253C59;  /* azul médio */
-  --cor-escura: #1A2A40;      /* azul escuro */
-  --texto-escuro: #0D0D0D;
-  --texto-claro: #F2F2F2;
-  --fundo-pagina: #F2F2F2;    /* usado no tema claro */
-  --fundo-sidebar: #1A2A40;
+  --cor-principal:   #42628C;   /* azul destaque */
+  --cor-secundaria:  #253C59;   /* azul médio / cards dark */
+  --cor-escura:      #1A2A40;   /* fundo dark */
 
-  --cor-alerta: #e74c3c;      /* vermelho */
-  --cor-sucesso: #2ecc71;     /* verde */
-  --cor-aviso: #f39c12;       /* amarelo */
+  --texto-escuro:    #0D0D0D;
+  --texto-claro:     #F2F2F2;
 
-  --surface-dark: #223042;    /* superfícies no dark */
-  --surface-light: #ffffff;   /* superfícies no light */
+  --fundo-pagina:    #F2F2F2;   /* usado no tema claro */
+  --fundo-sidebar:   #1A2A40;   /* sidebar no dark */
+
+  --cor-alerta:      #dc3545;   /* erro (igual login) */
+  --cor-sucesso:     #2ecc71;
+  --cor-aviso:       #f39c12;
+
+  --surface-dark:    #253C59;   /* superfícies no dark (igual container do login) */
+  --surface-light:   #ffffff;   /* superfícies no light */
+
+  --placeholder:     #bfc7d6;
 }
 
 /* Tema claro */
 html[data-theme="light"]{
-  --bg-body: var(--fundo-pagina);
-  --bg-surface: var(--surface-light);
-  --text: var(--texto-escuro);
-  --muted: #6b7280;
-  --shadow: rgba(0,0,0,.12);
-  --sidebar-bg: #ffffff;
-  --sidebar-text: #0D0D0D;
-  --sidebar-border: #e5e7eb;
+  --bg-body:       var(--fundo-pagina);
+  --bg-surface:    var(--surface-light);
+  --text:          var(--texto-escuro);
+  --muted:         #6b7280;
+  --shadow:        rgba(0,0,0,.12);
+  --sidebar-bg:    #ffffff;
+  --sidebar-text:  #0D0D0D;
+  --sidebar-border:#e5e7eb;
 }
 
-/* Tema escuro */
+/* Tema escuro (mesma base visual do login) */
 html[data-theme="dark"]{
-  --bg-body: #0f1622;
-  --bg-surface: var(--surface-dark);
-  --text: var(--texto-claro);
-  --muted: #9aa4b2;
-  --shadow: rgba(0,0,0,.35);
-  --sidebar-bg: var(--fundo-sidebar);
-  --sidebar-text: var(--texto-claro);
-  --sidebar-border: rgba(255,255,255,.08);
+  --bg-body:       #1A2A40;
+  --bg-surface:    var(--surface-dark); /* 253C59 */
+  --text:          var(--texto-claro);
+  --muted:         var(--placeholder);  /*  bfc7d6  */
+  --shadow:        rgba(0,0,0,.35);
+  --sidebar-bg:    var(--fundo-sidebar);/* 1A2A40 */
+  --sidebar-text:  var(--texto-claro);
+  --sidebar-border:rgba(255,255,255,.08);
 }
 
 *{ box-sizing: border-box; }
@@ -88,8 +95,6 @@ body{
   color: var(--text);
 }
 
-
-
 /* Main spacing: no desktop, espaço ao lado do sidebar */
 @media (min-width: 992px){
   .main{
@@ -105,10 +110,20 @@ body{
   position:relative; overflow:hidden;
   box-shadow: 0 6px 14px var(--shadow);
 }
-.card-dashboard:hover{ transform: translateY(-3px); box-shadow: 0 12px 25px var(--shadow) !important; }
+.card-dashboard:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px var(--shadow) !important;
+}
 .card-title-lg{ font-size: 2rem; font-weight: 700; margin-bottom: 6px; }
-.card-icon{ position:absolute; top:16px; right:16px; font-size:2.8rem; color: rgba(0,0,0,.06); }
-.card-progress-bar{ height:6px; width:100%; position:absolute; left:0; bottom:0; background-color: rgba(0,0,0,.06); }
+.card-icon{
+  position:absolute; top:16px; right:16px;
+  font-size:2.8rem; color: rgba(0,0,0,.06);
+}
+.card-progress-bar{
+  height:6px; width:100%;
+  position:absolute; left:0; bottom:0;
+  background-color: rgba(0,0,0,.06);
+}
 .card-progress-fill{ height:100%; transition: width .5s ease-out; }
 
 /* Tabelas */
@@ -119,7 +134,7 @@ body{
 }
 .table-critico thead th{ background: var(--cor-alerta); }
 .linha-critica{
-  background-color: rgba(231,76,60,.10);
+  background-color: rgba(220,53,69,.10);
   font-weight: 600;
   border-left:3px solid var(--cor-alerta);
 }
@@ -136,21 +151,28 @@ body{
 .bg-info{ background-color: var(--cor-principal) !important; }
 .text-info{ color: var(--cor-principal) !important; }
 
+/* Botão primário seguindo a paleta do login */
 .btn-primary{
-  --bs-btn-bg: var(--cor-principal); --bs-btn-border-color: var(--cor-principal);
-  --bs-btn-hover-bg: #36567A; --bs-btn-hover-border-color: #36567A;
+  --bs-btn-bg: var(--cor-principal);
+  --bs-btn-border-color: var(--cor-principal);
+  --bs-btn-hover-bg: #1A2A40;
+  --bs-btn-hover-border-color: #42628C;
+  --bs-btn-color: #F2F2F2;
 }
 
 .sair-primary{
-  
-  --bs-btn-hover-bg: #ff0000; --bs-btn-hover-border-color: #ff0000;
-  --bs-btn-bg: var(--cor-principal); 
+  --bs-btn-bg: var(--cor-principal);
   --bs-btn-border-color: var(--cor-principal);
-  color: rgb(255, 255, 255);
+  --bs-btn-hover-bg: #ff0000;
+  --bs-btn-hover-border-color: #ff0000;
+  color: #ffffff;
 }
 
-
-.btn-warning{ --bs-btn-bg: var(--cor-aviso); --bs-btn-border-color: var(--cor-aviso); color:#0D0D0D; }
+.btn-warning{
+  --bs-btn-bg: var(--cor-aviso);
+  --bs-btn-border-color: var(--cor-aviso);
+  color:#0D0D0D;
+}
 hr{ border-color: var(--sidebar-border); }
 
 /* Ancoragem */
@@ -191,4 +213,35 @@ html[data-theme="light"] .topbar .navbar-nav.top-menu .nav-link.active{
   background: #e9eef6;
   color: var(--texto-escuro);
   box-shadow: inset 3px 0 0 0 var(--cor-principal);
+}
+
+input.form-control,
+select.form-select,
+textarea.form-control{
+  background-color: var(--bg-body);
+  border: 1px solid var(--cor-principal);
+  color: var(--text);
+}
+
+input.form-control::placeholder,
+textarea.form-control::placeholder{
+  color: var(--placeholder);
+}
+
+/* Força texto branco no modo escuro (exceto dentro das tabelas) */
+html[data-theme="dark"] body,
+html[data-theme="dark"] .main,
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] h5,
+html[data-theme="dark"] h6,
+html[data-theme="dark"] p,
+html[data-theme="dark"] span,
+html[data-theme="dark"] label,
+html[data-theme="dark"] .nav-link,
+html[data-theme="dark"] .modal-content,
+html[data-theme="dark"] .modal-content *:not(.btn):not(.badge){
+  color: #F2F2F2 !important;
 }
