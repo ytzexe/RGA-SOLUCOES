@@ -5,6 +5,17 @@ const STORAGE_KEYS = {
   ACCENT: 'stric_accent'
 };
 
+// ======= Logos por tema =======
+const LOGO_LIGHT = '../entrada/assets/Preta Com Fundo Branco.jpg'; // fundo claro
+const LOGO_DARK  = '../entrada/assets/Branca Com Fundo Preto.png';  // fundo escuro
+
+function aplicarLogoTema(tema){
+  const img = document.getElementById('appLogo');
+  if (!img) return;
+  img.src = (tema === 'dark') ? LOGO_DARK : LOGO_LIGHT;
+}
+
+
 // ======= Estado =======
 let estoque = JSON.parse(localStorage.getItem(STORAGE_KEYS.INVENTARIO)) || [
   { id: 1, codigo: 'OL-200', nome: 'Óleo 5W30 Sintético', categoria: 'oleos', qtd: 30, minimo: 15, custo: 35.00, venda: 55.00, fornecedor: 'Lubri Total' },
@@ -24,20 +35,30 @@ const marginPct = (c,v) => (c === 0 || v === 0) ? '0%' : (((v - c) / c) * 100).t
 
 // ======= Tema / Config =======
 function aplicarTemaInicial(){
+  // se você já define o tema no <head>, pode ler direto de lá:
   const salvo = localStorage.getItem(STORAGE_KEYS.THEME);
-  const tema = salvo || 'dark';
+  const tema = salvo || document.documentElement.getAttribute('data-theme') || 'light';
+
   document.documentElement.setAttribute('data-theme', tema);
+
   const sw = $('#switchTema');
   if (sw) sw.checked = (tema === 'dark');
+
   atualizarIconeTemaBtn();
+  aplicarLogoTema(tema); // <<< AQUI
 }
+
 function alternarTema(){
-  const atual = document.documentElement.getAttribute('data-theme') || 'dark';
+  const atual = document.documentElement.getAttribute('data-theme') || 'light';
   const prox = (atual === 'dark') ? 'light' : 'dark';
+
   document.documentElement.setAttribute('data-theme', prox);
   localStorage.setItem(STORAGE_KEYS.THEME, prox);
+
   atualizarIconeTemaBtn();
+  aplicarLogoTema(prox); // <<< AQUI
 }
+
 function atualizarIconeTemaBtn(){
   const tema = document.documentElement.getAttribute('data-theme') || 'dark';
   const btn = $('#btnThemeToggle');
@@ -309,15 +330,19 @@ function listeners(){
  const btnTheme = $('#btnThemeToggle');
   if (btnTheme) btnTheme.addEventListener('click', alternarTema);
 
-  const sw = $('#switchTema');
-  if (sw){
-    sw.addEventListener('change', () => {
-      const toDark = sw.checked;
-      document.documentElement.setAttribute('data-theme', toDark ? 'dark' : 'light');
-      localStorage.setItem(STORAGE_KEYS.THEME, toDark ? 'dark' : 'light');
-      atualizarIconeTemaBtn();
-    });
-  }
+ const sw = $('#switchTema');
+if (sw){
+  sw.addEventListener('change', () => {
+    const toDark = sw.checked;
+    const tema = toDark ? 'dark' : 'light';
+
+    document.documentElement.setAttribute('data-theme', tema);
+    localStorage.setItem(STORAGE_KEYS.THEME, tema);
+    atualizarIconeTemaBtn();
+    aplicarLogoTema(tema); // <<< AQUI
+  });
+}
+
 
   // Accent (primária)
   $$('.color-pill').forEach(btn => {
