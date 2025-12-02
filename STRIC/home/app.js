@@ -6,8 +6,8 @@ const STORAGE_KEYS = {
 };
 
 // ======= Logos por tema =======
-const LOGO_LIGHT = '../entrada/assets/Preta Com Fundo Branco.jpg'; // fundo claro
-const LOGO_DARK  = '../entrada/assets/Branca Com Fundo Preto.png';  // fundo escuro
+const LOGO_LIGHT = '../entrada/assets/Tema Claro.svg'; // fundo claro
+const LOGO_DARK  = '../entrada/assets/Tema Escuro.svg'; // fundo escuro
 
 function aplicarLogoTema(tema){
   const img = document.getElementById('appLogo');
@@ -15,27 +15,65 @@ function aplicarLogoTema(tema){
   img.src = (tema === 'dark') ? LOGO_DARK : LOGO_LIGHT;
 }
 
-
 // ======= Estado =======
 let estoque = JSON.parse(localStorage.getItem(STORAGE_KEYS.INVENTARIO)) || [
-  { id: 1, codigo: 'OL-200', nome: 'Óleo 5W30 Sintético', categoria: 'oleos', qtd: 30, minimo: 15, custo: 35.00, venda: 55.00, fornecedor: 'Lubri Total' },
-  { id: 2, codigo: 'PM-050', nome: 'Pastilha Freio Diant.',  categoria: 'freios',  qtd: 15, minimo: 10, custo: 80.00, venda: 149.90, fornecedor: 'Freios Cia' },
-  { id: 3, codigo: 'CX-99', nome: 'Correia Dentada (Kit)',   categoria: 'motor',   qtd: 1,  minimo: 5,  custo: 120.00, venda: 250.00, fornecedor: 'Peças Motor Sul' },
-  { id: 4, codigo: 'BL-110', nome: 'Bateria 60ah',            categoria: 'eletrica',qtd: 8,  minimo: 6,  custo: 280.00, venda: 450.00, fornecedor: 'Baterias Top' },
-  { id: 5, codigo: 'PL-10', nome: 'Pneu Aro 14 (Modelo X)',   categoria: 'freios',  qtd: 2,  minimo: 10, custo: 180.00, venda: 350.00, fornecedor: 'Distribuidora Pneus' }
+  { id: 1, codigo: 'OL-200', nome: 'Óleo 5W30 Sintético', categoria: 'oleos',    qtd: 30, minimo: 15, custo: 35.00,  venda: 55.00,  fornecedor: 'Lubri Total' },
+  { id: 2, codigo: 'PM-050', nome: 'Pastilha Freio Diant.',  categoria: 'freios',  qtd: 15, minimo: 10, custo: 80.00,  venda: 149.90, fornecedor: 'Freios Cia' },
+  { id: 3, codigo: 'CX-99',  nome: 'Correia Dentada (Kit)',  categoria: 'motor',   qtd: 1,  minimo: 5,  custo: 120.00, venda: 250.00, fornecedor: 'Peças Motor Sul' },
+  { id: 4, codigo: 'BL-110', nome: 'Bateria 60ah',           categoria: 'eletrica',qtd: 8,  minimo: 6,  custo: 280.00, venda: 450.00, fornecedor: 'Baterias Top' },
+  { id: 5, codigo: 'PL-10',  nome: 'Pneu Aro 14 (Modelo X)', categoria: 'freios',  qtd: 2,  minimo: 10, custo: 180.00, venda: 350.00, fornecedor: 'Distribuidora Pneus' }
 ];
 let proximoId = estoque.length > 0 ? Math.max(...estoque.map(i => i.id)) + 1 : 1;
 
 // ======= Utils =======
-const $ = sel => document.querySelector(sel);
+const $  = sel => document.querySelector(sel);
 const $$ = sel => Array.from(document.querySelectorAll(sel));
 const salvarEstoque = () => localStorage.setItem(STORAGE_KEYS.INVENTARIO, JSON.stringify(estoque));
 const money = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const marginPct = (c,v) => (c === 0 || v === 0) ? '0%' : (((v - c) / c) * 100).toFixed(0) + '%';
 
+// ======= Validação de margem no formulário =======
+function verificarMargemFormulario() {
+  const inputCusto = $('#itemCusto');
+  const inputVenda = $('#itemVenda');
+  const aviso      = $('#avisoLucro');
+
+  if (!inputCusto || !inputVenda || !aviso) return;
+
+  const custo = parseFloat(inputCusto.value);
+  const venda = parseFloat(inputVenda.value);
+
+  // limpa estados
+  inputCusto.classList.remove('is-invalid', 'is-valid');
+  inputVenda.classList.remove('is-invalid', 'is-valid');
+  aviso.classList.add('d-none');
+  aviso.textContent = '';
+
+  if (isNaN(custo) || isNaN(venda) || custo <= 0) {
+    return; // ainda não tem dados suficientes
+  }
+
+  const margem = ((venda - custo) / custo) * 100;
+
+  if (venda <= custo) {
+    // sem lucro / prejuízo
+    aviso.textContent = 'Atenção: este item está sem lucro (preço de venda menor ou igual ao custo).';
+    aviso.classList.remove('d-none');
+    inputCusto.classList.add('is-invalid');
+    inputVenda.classList.add('is-invalid');
+  } else if (margem < 15) { // limite de margem baixa (ajuste se quiser)
+    aviso.textContent = `Aviso: margem de lucro baixa (~${margem.toFixed(1)}%).`;
+    aviso.classList.remove('d-none');
+    inputVenda.classList.add('is-invalid');
+  } else {
+    // margem ok
+    inputCusto.classList.add('is-valid');
+    inputVenda.classList.add('is-valid');
+  }
+}
+
 // ======= Tema / Config =======
 function aplicarTemaInicial(){
-  // se você já define o tema no <head>, pode ler direto de lá:
   const salvo = localStorage.getItem(STORAGE_KEYS.THEME);
   const tema = salvo || document.documentElement.getAttribute('data-theme') || 'light';
 
@@ -45,7 +83,7 @@ function aplicarTemaInicial(){
   if (sw) sw.checked = (tema === 'dark');
 
   atualizarIconeTemaBtn();
-  aplicarLogoTema(tema); // <<< AQUI
+  aplicarLogoTema(tema);
 }
 
 function alternarTema(){
@@ -56,7 +94,7 @@ function alternarTema(){
   localStorage.setItem(STORAGE_KEYS.THEME, prox);
 
   atualizarIconeTemaBtn();
-  aplicarLogoTema(prox); // <<< AQUI
+  aplicarLogoTema(prox);
 }
 
 function atualizarIconeTemaBtn(){
@@ -65,10 +103,12 @@ function atualizarIconeTemaBtn(){
   if (!btn) return;
   btn.innerHTML = tema === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
 }
+
 function aplicarAcento(corHex){
   document.documentElement.style.setProperty('--cor-principal', corHex);
   localStorage.setItem(STORAGE_KEYS.ACCENT, corHex);
 }
+
 function aplicarAcentoInicial(){
   const salvo = localStorage.getItem(STORAGE_KEYS.ACCENT);
   if (salvo) aplicarAcento(salvo);
@@ -76,7 +116,6 @@ function aplicarAcentoInicial(){
 
 // ======= Render =======
 function carregarTabelas(filtroBusca = '', filtroCategoria = '') {
-  // ------ variáveis locais usadas para montar o HTML ------
   let htmlEstoque = '';
   let htmlCriticos = '';
   let totalCriticos = 0;
@@ -100,7 +139,6 @@ function carregarTabelas(filtroBusca = '', filtroCategoria = '') {
     const critico = item.qtd < item.minimo;
     totalValor += item.qtd * item.venda;
 
-    // tabela de estoque completo
     htmlEstoque += `
       <tr class="${critico ? 'table-warning' : ''}">
         <td>${item.codigo}</td>
@@ -115,7 +153,6 @@ function carregarTabelas(filtroBusca = '', filtroCategoria = '') {
       </tr>
     `;
 
-    // itens críticos (tabela completa + top 5)
     if (critico) {
       totalCriticos++;
       const pedir = item.minimo - item.qtd;
@@ -149,7 +186,6 @@ function carregarTabelas(filtroBusca = '', filtroCategoria = '') {
     }
   });
 
-  // ------ aplica nos elementos, se existirem na página ------
   const tbEstoque  = $('#tabelaEstoqueCompleto');
   const tbCriticos = $('#tabelaCriticosCompleta');
   const tbTop5     = $('#tabelaCriticosDashboard');
@@ -162,7 +198,6 @@ function carregarTabelas(filtroBusca = '', filtroCategoria = '') {
   if (spanCrit)   spanCrit.innerText   = totalCriticos;
   if (spanTotal)  spanTotal.innerText  = money(totalValor);
 
-  // ------ margem média (se o elemento existir) ------
   const margens = estoque.map(i => {
     if (i.custo <= 0) return 0;
     return ((i.venda - i.custo) / i.custo) * 100;
@@ -177,13 +212,13 @@ function carregarTabelas(filtroBusca = '', filtroCategoria = '') {
 
 // ======= Ações =======
 function adicionarNovoItem(){
-  const nome = $('#itemNome').value.trim();
-  const codigo = $('#itemCodigo').value.trim();
-  const categoria = $('#itemCategoria').value;
-  const qtd = parseInt($('#itemQtd').value,10);
-  const minimo = parseInt($('#itemMinimo').value,10);
-  const custo = parseFloat($('#itemCusto').value);
-  const venda = parseFloat($('#itemVenda').value);
+  const nome       = $('#itemNome').value.trim();
+  const codigo     = $('#itemCodigo').value.trim();
+  const categoria  = $('#itemCategoria').value;
+  const qtd        = parseInt($('#itemQtd').value,10);
+  const minimo     = parseInt($('#itemMinimo').value,10);
+  const custo      = parseFloat($('#itemCusto').value);
+  const venda      = parseFloat($('#itemVenda').value);
   const fornecedor = $('#itemFornecedor').value.trim();
 
   if (!nome || !codigo || !categoria || isNaN(qtd) || isNaN(minimo) || isNaN(custo) || isNaN(venda)){
@@ -191,20 +226,74 @@ function adicionarNovoItem(){
     return;
   }
 
+  // Atualiza visual de margem
+  verificarMargemFormulario();
+
+  if (custo > 0) {
+    const margem = ((venda - custo) / custo) * 100;
+
+    if (venda <= custo) {
+      const confirmaSemLucro = confirm(
+        'Atenção: este item está SEM lucro (preço de venda menor ou igual ao custo).\n\n' +
+        'Deseja salvar mesmo assim?'
+      );
+      if (!confirmaSemLucro) {
+        return;
+      }
+    } else if (margem < 15) {
+      const confirmaBaixaMargem = confirm(
+        `Aviso: margem de lucro baixa (~${margem.toFixed(1)}%).\n\n` +
+        'Deseja salvar mesmo assim?'
+      );
+      if (!confirmaBaixaMargem) {
+        return;
+      }
+    }
+  }
+
   const novo = { id: proximoId++, codigo, nome, categoria, qtd, minimo, custo, venda, fornecedor };
   estoque.push(novo);
   salvarEstoque();
   carregarTabelas();
+
   const modalEl = document.getElementById('modalNovoItem');
   const modal = bootstrap.Modal.getInstance(modalEl);
   if (modal) modal.hide();
+
   $('#formNovoItem').reset();
+
+  // limpa estados de margem após salvar
+  const inputCusto = $('#itemCusto');
+  const inputVenda = $('#itemVenda');
+  const aviso      = $('#avisoLucro');
+  if (inputCusto) inputCusto.classList.remove('is-valid','is-invalid');
+  if (inputVenda) inputVenda.classList.remove('is-valid','is-invalid');
+  if (aviso) {
+    aviso.classList.add('d-none');
+    aviso.textContent = '';
+  }
+
   alert(`Item "${nome}" adicionado!`);
 }
 
 function abrirDetalhesItem(id){
   const item = estoque.find(i => i.id === id);
   if (!item) return;
+
+  // calcula margem numérica
+  let margemNum = 0;
+  if (item.custo > 0) {
+    margemNum = ((item.venda - item.custo) / item.custo) * 100;
+  }
+
+  const margemTexto  = marginPct(item.custo, item.venda);
+  let margemClasse   = 'text-success';
+
+  // se margem negativa OU zero, fica vermelho
+  if (margemNum <= 0) {
+    margemClasse = 'text-danger';
+  }
+
   const html = `
     <p><strong>Nome:</strong> ${item.nome}</p>
     <p><strong>Código:</strong> ${item.codigo}</p>
@@ -215,8 +304,11 @@ function abrirDetalhesItem(id){
     <p><strong>Estoque Mínimo:</strong> ${item.minimo}</p>
     <p><strong>Preço Custo (Un.):</strong> ${money(item.custo)}</p>
     <p><strong>Preço Venda (Un.):</strong> ${money(item.venda)}</p>
-    <p><strong>Margem de Lucro:</strong> <span class="text-success fw-bold">${marginPct(item.custo,item.venda)}</span></p>
+    <p><strong>Margem de Lucro:</strong> 
+      <span class="${margemClasse} fw-bold">${margemTexto}</span>
+    </p>
   `;
+
   $('#corpoDetalhesItem').innerHTML = html;
   $('#btnExcluirItem').onclick = () => excluirItem(id);
   new bootstrap.Modal(document.getElementById('modalVerDetalhes')).show();
@@ -226,7 +318,7 @@ function excluirItem(id){
   if (!confirm('Excluir este item do estoque?')) return;
   estoque = estoque.filter(i => i.id !== id);
   salvarEstoque();
-  carregarTabelas(); 
+  carregarTabelas();
   const modalEl = document.getElementById('modalVerDetalhes');
   const modal = bootstrap.Modal.getInstance(modalEl);
   if (modal) modal.hide();
@@ -249,14 +341,15 @@ function simularVenda(servico){
 
 // ======= Vendas rápidas (render fixo) =======
 const vendasRapidas = [
-  { servico:'Troca de Óleo + Filtros', pecas:'Óleo 5W30 (4L), Filtro de Óleo, Filtro de Ar', maoObra:80, preco:300 },
-  { servico:'Revisão de Freios Dianteiros', pecas:'Pastilhas Dianteiras (par)', maoObra:150, preco:399 },
-  { servico:'Troca de Bateria', pecas:'Bateria 60ah', maoObra:40, preco:490 },
-  { servico:'Troca de Amortecedores (Par)', pecas:'Amortecedores (2), Kit Batente (2)', maoObra:250, preco:950 }
+  { servico:'Troca de Óleo + Filtros',        pecas:'Óleo 5W30 (4L), Filtro de Óleo, Filtro de Ar',          maoObra:80,  preco:300 },
+  { servico:'Revisão de Freios Dianteiros',   pecas:'Pastilhas Dianteiras (par)',                           maoObra:150, preco:399 },
+  { servico:'Troca de Bateria',               pecas:'Bateria 60ah',                                         maoObra:40,  preco:490 },
+  { servico:'Troca de Amortecedores (Par)',   pecas:'Amortecedores (2), Kit Batente (2)',                  maoObra:250, preco:950 }
 ];
+
 function renderVendas(){
   const tbody = $('#tabelaVendasRapidas');
-  if (!tbody) return; // se a página não tiver tabela de vendas, só sai
+  if (!tbody) return;
   tbody.innerHTML = vendasRapidas.map(v => `
     <tr>
       <td class="fw-bold">${v.servico}</td>
@@ -275,7 +368,7 @@ function renderVendas(){
 
 // ======= Listeners =======
 function listeners(){
-  // ---- Filtros (estoque completo) ----
+  // Filtros (estoque completo)
   const btnFiltrar = $('#btnFiltrarEstoque');
   const btnLimpar  = $('#btnLimparFiltros');
   const inputBusca = $('#inputPesquisa');
@@ -306,7 +399,7 @@ function listeners(){
   }
 
   // Ações em tabelas (delegação)
- document.body.addEventListener('click', e => {
+  document.body.addEventListener('click', e => {
     const btn = e.target.closest('button');
     if (!btn) return;
     const id = parseInt(btn.dataset.id, 10);
@@ -327,27 +420,32 @@ function listeners(){
   if (btnGerarPedido) btnGerarPedido.addEventListener('click', gerarPedidoCompra);
 
   // Tema
- const btnTheme = $('#btnThemeToggle');
+  const btnTheme = $('#btnThemeToggle');
   if (btnTheme) btnTheme.addEventListener('click', alternarTema);
 
- const sw = $('#switchTema');
-if (sw){
-  sw.addEventListener('change', () => {
-    const toDark = sw.checked;
-    const tema = toDark ? 'dark' : 'light';
+  const sw = $('#switchTema');
+  if (sw){
+    sw.addEventListener('change', () => {
+      const toDark = sw.checked;
+      const tema = toDark ? 'dark' : 'light';
 
-    document.documentElement.setAttribute('data-theme', tema);
-    localStorage.setItem(STORAGE_KEYS.THEME, tema);
-    atualizarIconeTemaBtn();
-    aplicarLogoTema(tema); // <<< AQUI
-  });
-}
-
+      document.documentElement.setAttribute('data-theme', tema);
+      localStorage.setItem(STORAGE_KEYS.THEME, tema);
+      atualizarIconeTemaBtn();
+      aplicarLogoTema(tema);
+    });
+  }
 
   // Accent (primária)
   $$('.color-pill').forEach(btn => {
     btn.addEventListener('click', () => aplicarAcento(btn.dataset.color));
   });
+
+  // Eventos de margem (digitação em custo/venda)
+  const inputCusto = $('#itemCusto');
+  const inputVenda = $('#itemVenda');
+  if (inputCusto) inputCusto.addEventListener('input', verificarMargemFormulario);
+  if (inputVenda) inputVenda.addEventListener('input', verificarMargemFormulario);
 }
 
 // ======= Init =======
