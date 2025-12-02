@@ -28,52 +28,67 @@
 </head>
 
 
-
 <body>
 
     <!-- Topbar (mobile + desktop) -->
     <nav class="navbar navbar-expand-lg topbar fixed-top shadow-sm">
-        <div class="container-fluid">
-            <button class="btn btn-outline-primary me-2 d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
-                <i class="fas fa-bars"></i>
-            </button>
+  <div class="container-fluid">
 
-            <div class="d-flex align-items-center gap-2">
-            <img id="appLogo" src="../entrada/assets/Preta Com Fundo Branco.jpg" alt="Logo STRIC" class="brand-logo">
-                <span class="navbar-brand mb-0 h1 brand-text">
-            </div>
+    <!-- LOGO + NOME (CLICÁVEL PRO DASHBOARD) -->
+    <a href="index.html" class="navbar-brand d-flex align-items-center gap-2 mb-0">
+      <img
+        id="appLogo"
+        src="../entrada/assets/Preta Com Fundo Branco.jpg"
+        alt="Logo STRIC"
+        class="brand-logo"
+      >
+      
+    </a>
 
-            <!--  colapsável no mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topbarMenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <!-- Botão hamburguer (mobile) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topbarMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-            <div class="collapse navbar-collapse" id="topbarMenu">
-                <!--  me-auto = tudo à esquerda -->
-                <ul class="navbar-nav me-auto align-items-center gap-2 top-menu">
-                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-gauge-high me-1"></i>
-                            Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link " href="estoque_completo.html"><i
-                                class="fas fa-warehouse me-1"></i>
-                            Estoque Completo</a></li>
-                    <li class="nav-item"><a class="nav-link " href="reposicao_urgente.html"><i
-                                class="fas fa-triangle-exclamation me-1"></i> Itens Críticos</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="manual_vendas.html"><i class="fas fa-handshake me-1"></i> Manual
-                            de Vendas</a></li>
-                </ul>
+    <!-- Menu -->
+    <div class="collapse navbar-collapse" id="topbarMenu">
+      <ul class="navbar-nav me-auto align-items-center gap-2 top-menu">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">
+            <i class="fas fa-gauge-high me-1"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="estoque_completo.html">
+            <i class="fas fa-warehouse me-1"></i> Estoque Completo
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="reposicao_urgente.html">
+            <i class="fas fa-triangle-exclamation me-1"></i> Itens Críticos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="manual_vendas.html">
+            <i class="fas fa-handshake me-1"></i> Manual de Vendas
+          </a>
+        </li>
+      </ul>
 
-                <!-- Ações (ficam à direita) -->
-                <div class="d-flex align-items-center gap-2">
-                    <button id="btnThemeToggle" class="btn btn-outline-secondary" title="Alternar tema"><i
-                            class="fas fa-moon"></i></button>
-                    <button class="btn btn-outline-secondary" data-bs-toggle="modal"
-                        data-bs-target="#modalConfiguracoes">
-                        <i class="fas fa-gear"></i> <span class="d-none d-sm-inline">Configurações</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
+      <!-- Ações à direita -->
+      <div class="d-flex align-items-center gap-2">
+        <button id="btnThemeToggle" class="btn btn-outline-secondary" title="Alternar tema">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalConfiguracoes">
+          <i class="fas fa-gear"></i>
+          <span class="d-none d-sm-inline">Configurações</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
 
 
     <!-- Sidebar (fixa no desktop, offcanvas no mobile) -->
