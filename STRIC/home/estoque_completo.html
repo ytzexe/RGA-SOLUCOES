@@ -7,6 +7,10 @@
     <title>S.T.R.I.C — Gestão de Estoque</title>
     <meta name="theme-color" content="#1A2A40" />
 
+
+
+
+
     <script>
         (function () {
             try {
@@ -32,50 +36,63 @@
 <body>
 
     <!-- Topbar (mobile + desktop) -->
-    <nav class="navbar navbar-expand-lg topbar fixed-top shadow-sm">
-        <div class="container-fluid">
-            <button class="btn btn-outline-primary me-2 d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
-                <i class="fas fa-bars"></i>
-            </button>
+   <nav class="navbar navbar-expand-lg topbar fixed-top shadow-sm">
+  <div class="container-fluid">
 
-            <div class="d-flex align-items-center gap-2">
-            <img id="appLogo" src="../entrada/assets/Preta Com Fundo Branco.jpg" alt="Logo STRIC" class="brand-logo">
+    <!-- LOGO + NOME (CLICÁVEL PRO DASHBOARD) -->
+    <a href="index.html" class="navbar-brand d-flex align-items-center gap-2 mb-0">
+      <img
+        id="appLogo"
+        src="../entrada/assets/Preta Com Fundo Branco.jpg"
+        alt="Logo STRIC"
+        class="brand-logo"
+      >
+     
+    </a>
 
-                <span class="navbar-brand mb-0 h1 brand-text">
-            </div>
+    <!-- Botão hamburguer (mobile) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topbarMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-            <!--  colapsável no mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topbarMenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <!-- Menu -->
+    <div class="collapse navbar-collapse" id="topbarMenu">
+      <ul class="navbar-nav me-auto align-items-center gap-2 top-menu">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">
+            <i class="fas fa-gauge-high me-1"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="estoque_completo.html">
+            <i class="fas fa-warehouse me-1"></i> Estoque Completo
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="reposicao_urgente.html">
+            <i class="fas fa-triangle-exclamation me-1"></i> Itens Críticos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="manual_vendas.html">
+            <i class="fas fa-handshake me-1"></i> Manual de Vendas
+          </a>
+        </li>
+      </ul>
 
-            <div class="collapse navbar-collapse" id="topbarMenu">
-                <!--  me-auto = tudo à esquerda -->
-                <ul class="navbar-nav me-auto align-items-center gap-2 top-menu">
-                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-gauge-high me-1"></i>
-                            Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="estoque_completo.html"><i
-                                class="fas fa-warehouse me-1"></i>
-                            Estoque Completo</a></li>
-                    <li class="nav-item"><a class="nav-link" href="reposicao_urgente.html"><i
-                                class="fas fa-triangle-exclamation me-1"></i> Itens Críticos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="manual_vendas.html"><i
-                                class="fas fa-handshake me-1"></i> Manual
-                            de Vendas</a></li>
-                </ul>
-
-                <!-- Ações (ficam à direita) -->
-                <div class="d-flex align-items-center gap-2">
-                    <button id="btnThemeToggle" class="btn btn-outline-secondary" title="Alternar tema"><i
-                            class="fas fa-moon"></i></button>
-                    <button class="btn btn-outline-secondary" data-bs-toggle="modal"
-                        data-bs-target="#modalConfiguracoes">
-                        <i class="fas fa-gear"></i> <span class="d-none d-sm-inline">Configurações</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
+      <!-- Ações à direita -->
+      <div class="d-flex align-items-center gap-2">
+        <button id="btnThemeToggle" class="btn btn-outline-secondary" title="Alternar tema">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalConfiguracoes">
+          <i class="fas fa-gear"></i>
+          <span class="d-none d-sm-inline">Configurações</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
 
 
     <!-- Sidebar (fixa no desktop, offcanvas no mobile) -->
@@ -152,56 +169,88 @@
 
         <hr class="my-4">
 
-        <!-- MODAL: Novo Item -->
-        <div class="modal fade" id="modalNovoItem" tabindex="-1" aria-labelledby="modalNovoItemLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content bg-surface">
-                    <div class="modal-header bg-success text-white">
-                        <h5 class="modal-title" id="modalNovoItemLabel"><i class="fas fa-plus me-1"></i> Adicionar Novo
-                            Item
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Fechar"></button>
+      <!-- MODAL: Novo Item -->
+<div class="modal fade" id="modalNovoItem" tabindex="-1" aria-labelledby="modalNovoItemLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-surface">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="modalNovoItemLabel"><i class="fas fa-plus me-1"></i> Adicionar Novo
+                    Item
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formNovoItem">
+                    <div class="mb-3">
+                        <label for="itemNome" class="form-label">Nome do Item</label>
+                        <input type="text" class="form-control" id="itemNome" required>
                     </div>
-                    <div class="modal-body">
-                        <form id="formNovoItem">
-                            <div class="mb-3"><label for="itemNome" class="form-label">Nome do Item</label><input
-                                    type="text" class="form-control" id="itemNome" required></div>
-                            <div class="mb-3"><label for="itemCodigo" class="form-label">Código</label><input
-                                    type="text" class="form-control" id="itemCodigo" required></div>
-                            <div class="mb-3"><label for="itemCategoria" class="form-label">Categoria</label>
-                                <select class="form-select" id="itemCategoria" required>
-                                    <option value="oleos">Óleos e Fluidos</option>
-                                    <option value="freios">Freios e Suspensão</option>
-                                    <option value="eletrica">Elétrica e Baterias</option>
-                                    <option value="motor">Motor</option>
-                                </select>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3"><label for="itemQtd"
-                                        class="form-label">Quantidade</label><input type="number" class="form-control"
-                                        id="itemQtd" min="0" required></div>
-                                <div class="col-md-6 mb-3"><label for="itemMinimo" class="form-label">Estoque
-                                        Mínimo</label><input type="number" class="form-control" id="itemMinimo" min="0"
-                                        required></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3"><label for="itemCusto" class="form-label">Preço Custo
-                                        (R$)</label><input type="number" class="form-control" id="itemCusto" step="0.01"
-                                        required></div>
-                                <div class="col-md-6 mb-3"><label for="itemVenda" class="form-label">Preço Venda
-                                        (R$)</label><input type="number" class="form-control" id="itemVenda" step="0.01"
-                                        required></div>
-                            </div>
-                            <div class="mb-3"><label for="itemFornecedor" class="form-label">Fornecedor</label><input
-                                    type="text" class="form-control" id="itemFornecedor"></div>
-                        </form>
+
+                    <div class="mb-3">
+                        <label for="itemCodigo" class="form-label">Código</label>
+                        <input type="text" class="form-control" id="itemCodigo" required>
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button class="btn btn-success" id="btnSalvarItem">Salvar Item</button>
+
+                    <div class="mb-3">
+                        <label for="itemCategoria" class="form-label">Categoria</label>
+                        <select class="form-select" id="itemCategoria" required>
+                            <option value="oleos">Óleos e Fluidos</option>
+                            <option value="freios">Freios e Suspensão</option>
+                            <option value="eletrica">Elétrica e Baterias</option>
+                            <option value="motor">Motor</option>
+                        </select>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="itemQtd" class="form-label">Quantidade</label>
+                            <input type="number" class="form-control" id="itemQtd" min="0" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="itemMinimo" class="form-label">Estoque Mínimo</label>
+                            <input type="number" class="form-control" id="itemMinimo" min="0" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="itemCusto" class="form-label">Preço Custo (R$)</label>
+                            <input type="number" class="form-control" id="itemCusto" step="0.01" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="itemVenda" class="form-label">Preço Venda (R$)</label>
+                            <input type="number" class="form-control" id="itemVenda" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <!-- AVISO DE MARGEM -->
+                    <div class="mb-2">
+                        <small id="avisoLucro" class="text-danger d-none">
+                            <!-- texto preenchido via JS -->
+                        </small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="itemFornecedor" class="form-label">Fornecedor</label>
+                        <input type="text" class="form-control" id="itemFornecedor">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button class="btn btn-success" id="btnSalvarItem">Salvar Item</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AVISO DE MARGEM -->
+<div class="mb-2">
+    <small id="avisoLucro" class="text-danger d-none">
+        <!-- texto preenchido via JS -->
+    </small>
                 </div>
             </div>
         </div>
