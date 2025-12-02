@@ -1,6 +1,8 @@
 /* === Paleta base (STRIC) === */
+body {
+  margin: 0;
 
-
+}
 
 :root{
   --cor-principal:   #42628C;   /* azul destaque */
@@ -88,7 +90,7 @@ body{
   background: var(--bg-surface);
 }
 .brand-logo{
-  height: 100px; width: auto;
+  height: 80px; width: auto;
   object-fit: contain;
 }
 .brand-text{
@@ -160,13 +162,7 @@ body{
   --bs-btn-color: #F2F2F2;
 }
 
-.sair-primary{
-  --bs-btn-bg: var(--cor-principal);
-  --bs-btn-border-color: var(--cor-principal);
-  --bs-btn-hover-bg: #ff0000;
-  --bs-btn-hover-border-color: #ff0000;
-  color: #ffffff;
-}
+
 
 .btn-warning{
   --bs-btn-bg: var(--cor-aviso);
@@ -174,6 +170,12 @@ body{
   color:#0D0D0D;
 }
 hr{ border-color: var(--sidebar-border); }
+
+/* Destaque extra para campos inválidos no STRIC */
+.is-invalid {
+  border-width: 2px;
+}
+
 
 /* Ancoragem */
 section{ scroll-margin-top: 80px; }
