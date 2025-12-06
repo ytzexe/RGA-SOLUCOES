@@ -6,7 +6,7 @@ Versão 1.0
 Este repositório foi disponibilizado exclusivamente para fins de avaliação acadêmica no contexto das atividades do Senai.
 Todo o conteúdo aqui publicado — incluindo código-fonte, estrutura lógica, documentação, imagens, diagramas, textos e quaisquer demais materiais — é protegido por direitos autorais conforme a legislação brasileira (Lei nº 9.610/98) e normas internacionais.
 
-1. Propriedade Intelectual
+# 1. Propriedade Intelectual
 
 O autor mantém 100% dos direitos autorais sobre todos os arquivos e conteúdos presentes neste repositório.
 Nenhuma permissão de uso é concedida além da visualização necessária para avaliação acadêmica.
