@@ -11,7 +11,7 @@ Todo o conteúdo aqui publicado — incluindo código-fonte, estrutura lógica, 
 O autor mantém 100% dos direitos autorais sobre todos os arquivos e conteúdos presentes neste repositório.
 Nenhuma permissão de uso é concedida além da visualização necessária para avaliação acadêmica.
 
-2. Proibição de Uso
+# 2. Proibição de Uso
 
 É expressamente proibido, sem exceções:
 
@@ -27,14 +27,14 @@ criar obras derivadas, adaptações ou reimplementações baseadas neste conteú
 
 Qualquer violação será considerada infração de direitos autorais e poderá gerar medidas legais cabíveis.
 
-3. Ausência de Licença
+# 3. Ausência de Licença
 
 Este repositório não possui licença pública.
 Isso significa que nenhum uso é permitido, em nenhuma circunstância, sem autorização expressa e por escrito do autor.
 
 Todo o conteúdo é considerado ALL RIGHTS RESERVED.
 
-4. Acesso Público para Avaliação
+# 4. Acesso Público para Avaliação
 
 O repositório está público unicamente para permitir:
 
@@ -46,7 +46,7 @@ transparência acadêmica.
 
 O acesso não implica concessão de direitos de uso.
 
-5. Responsabilidade do Usuário
+# 5. Responsabilidade do Usuário
 
 Ao acessar este repositório, o usuário reconhece que:
 
@@ -56,12 +56,12 @@ qualquer utilização não autorizada constitui violação da lei;
 
 poderá responder civil e criminalmente por infrações aos direitos autorais.
 
-6. Alterações deste Termo
+# 6. Alterações deste Termo
 
 O autor pode revisar, atualizar ou complementar este Termo a qualquer momento, sem aviso prévio.
 A simples visualização contínua implica concordância com as possíveis alterações.
 
-7. Autor
+# 7. Autor
 
 Nome: Kauã Lucas
 Projeto: Trabalho Acadêmico – Senai 
